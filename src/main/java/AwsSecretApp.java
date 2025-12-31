@@ -16,7 +16,13 @@ public class AwsSecretApp {
 
         try {
             var secret = secretService.getSecretValue("hash_salt");
-            System.out.println("the secret is: " + secret);
+            if (secret != null) {
+                // For simple string secrets, the value is stored in the password field
+                String secretValue = secret.getPassword() != null ? secret.getPassword() : secret.toString();
+                System.out.println("the secret is: " + secretValue);
+            } else {
+                System.out.println("the secret is: null");
+            }
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();

@@ -51,7 +51,14 @@ public class SecretWrapperService implements SecretWrapperInterface{
 			// Decrypted secret using the associated KMS CMK
 			String secretResponseJson = getSecretValueResponse.getSecretString();
 			if (secretResponseJson != null) {
-				secretResponse = new ObjectMapper().readValue(secretResponseJson, SecretManagerResponseBody.class);
+				try {
+					secretResponse = new ObjectMapper().readValue(secretResponseJson, SecretManagerResponseBody.class);
+				} catch (JsonProcessingException e) {
+					// If it's not JSON, create a response body with the raw value in password field
+					LOG.info("Secret is not JSON, treating as raw string: {}", secretName);
+					secretResponse = new SecretManagerResponseBody();
+					secretResponse.setPassword(secretResponseJson);
+				}
 			}
 
 		} catch (ResourceNotFoundException e) {
@@ -61,8 +68,6 @@ public class SecretWrapperService implements SecretWrapperInterface{
 			LOG.error("The request was invalid due to : {} ", ExceptionUtils.getStackTrace(e));
 		} catch (InvalidParameterException e) {
 			LOG.error("The request had invalid params : {}", ExceptionUtils.getStackTrace(e));
-		} catch (JsonProcessingException e) {
-			LOG.error("Error inside AwsSecretManagerService getSecretValue() method: {}", e.getOriginalMessage());
 		} catch (Exception e) {
 			LOG.error("The request had error : {} ", e.getMessage());
 		}
