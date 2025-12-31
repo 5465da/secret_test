@@ -16,7 +16,7 @@ public class AwsSecretApp {
 
         try {
             var secret = secretService.getSecretValue("hash_salt");
-            System.out.println("Retrieved secret: " + secret);
+            System.out.println("the secret is: " + secret);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
