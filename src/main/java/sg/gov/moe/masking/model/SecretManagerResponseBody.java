@@ -167,4 +167,20 @@ public class SecretManagerResponseBody {
 		this.secretAccessKey = secretAccessKey;
 	}
 
+    //add toString method for printing
+    @Override
+    public String toString() {
+        return "SecretManagerResponseBody{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", engine='" + engine + '\'' +
+                ", host='" + host + '\'' +
+                ", port='" + port + '\'' +
+                ", dbClusterIdentifier='" + dbClusterIdentifier + '\'' +
+                ", accessKeyId='" + accessKeyId + '\'' +
+                ", secretAccessKey='" + secretAccessKey + '\'' +
+                ", hashSalt='" + hashSalt + '\'' +
+                '}';
+    }
+
 }

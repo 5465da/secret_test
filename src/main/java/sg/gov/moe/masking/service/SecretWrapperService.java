@@ -55,7 +55,7 @@ public class SecretWrapperService implements SecretWrapperInterface{
 					secretResponse = new ObjectMapper().readValue(secretResponseJson, SecretManagerResponseBody.class);
 				} catch (JsonProcessingException e) {
 					// If it's not JSON, create a response body with the raw value in password field
-					LOG.info("Secret is not JSON, treating as raw string: {}", secretName);
+					System.out.println("Secret is not JSON, treating as raw string: " + secretName);
 					secretResponse = new SecretManagerResponseBody();
 					secretResponse.setPassword(secretResponseJson);
 				}

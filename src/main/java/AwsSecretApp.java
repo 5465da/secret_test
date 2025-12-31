@@ -15,11 +15,13 @@ public class AwsSecretApp {
         SecretWrapperService secretService = context.getBean(SecretWrapperService.class);
 
         try {
-            var secret = secretService.getSecretValue("hash_salt2");
+            var secret = secretService.getSecretValue("hashSalt");
             if (secret != null) {
                 // For simple string secrets, the value is stored in the password field
-                System.out.println("the secret: " + secret);
+                System.out.println("the secret: " + secret.toString());
                 System.out.println("the secret is a: " + secret.getHashSalt());
+                // Add additional handling for other fields if necessary
+                
             } else {
                 System.out.println("the secret is a: null");
             }
