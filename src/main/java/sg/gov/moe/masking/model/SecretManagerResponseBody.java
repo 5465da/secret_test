@@ -13,7 +13,15 @@ public class SecretManagerResponseBody {
 	private String dbClusterIdentifier;
 	private String accessKeyId;
 	private String secretAccessKey;
+    private String hashSalt;
 
+    public String getHashSalt() {
+        return hashSalt;
+    }
+
+    public void setHashSalt(String hashSalt) {
+        this.hashSalt = hashSalt;
+    }
 	/**
 	 * Get the password
 	 *
