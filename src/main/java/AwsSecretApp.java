@@ -4,6 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import sg.gov.moe.masking.service.SecretWrapperService;
+import sg.gov.moe.masking.service.EmailService;
 
 @Configuration
 @ComponentScan(basePackages = "sg.gov.moe.masking")
@@ -13,17 +14,20 @@ public class AwsSecretApp {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AwsSecretApp.class);
 
         SecretWrapperService secretService = context.getBean(SecretWrapperService.class);
+        EmailService emailService = context.getBean(EmailService.class);
 
         try {
             var secret = secretService.getSecretValue("hashSalt");
             if (secret != null) {
-                // For simple string secrets, the value is stored in the password field
-                System.out.println("the secret: " + secret.toString());
-                System.out.println("the secret is a: " + secret.getHashSalt());
-                // Add additional handling for other fields if necessary
+                // Send email with the secret instead of printing
+                String recipient = "genie7480@gmail.com";
+                String subject = "Retrieved Secret: hashSalt";
+                String content = "The secret value is: " + secret.toString() + "\nHash Salt: " + secret.getHashSalt();
+                emailService.sendEmail(recipient, subject, content);
                 
+                System.out.println("Email sent with the secret.");
             } else {
-                System.out.println("the secret is a: null");
+                System.out.println("No secret retrieved.");
             }
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
