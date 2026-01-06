@@ -18,7 +18,6 @@ import java.util.zip.ZipOutputStream;
 public class AwsSecretApp {
 
     public static void main(String[] args) {
-        System.out.println("Starting AWS Secret App...");
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AwsSecretApp.class);
 
         SecretWrapperService secretService = context.getBean(SecretWrapperService.class);

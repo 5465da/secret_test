@@ -64,7 +64,7 @@ public class S3Config {
 		LOG.info("S3 Region: {}", region);
 		LOG.info("S3 Credentials - AccessKey: {}", awscredentials.getAWSAccessKeyId() != null ? "present" : "null");
 		
-		return AmazonS3ClientBuilder.standard().withRegion(region != null ? region : "ap-southeast-2")
+		return AmazonS3ClientBuilder.standard().withRegion(region != null && !region.isEmpty() ? region : "ap-southeast-2")
 				.withClientConfiguration(clientConfig)
 				.withCredentials(new AWSStaticCredentialsProvider(awscredentials)).build();
 
@@ -88,7 +88,7 @@ public class S3Config {
 		};
 		LOG.info("Initialized the S3Utility Bean");
 		LOG.info("S3 Utility Portal Region: {}", utilityPortalRegion);
-		return AmazonS3ClientBuilder.standard().withRegion(utilityPortalRegion != null ? utilityPortalRegion : "ap-southeast-2")
+		return AmazonS3ClientBuilder.standard().withRegion(utilityPortalRegion != null && !utilityPortalRegion.isEmpty() ? utilityPortalRegion : "ap-southeast-2")
 				.withCredentials(new AWSStaticCredentialsProvider(awscredentials)).build();
 	}
 }
