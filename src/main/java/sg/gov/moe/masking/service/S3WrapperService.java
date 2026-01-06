@@ -39,7 +39,8 @@ public class S3WrapperService implements S3WrapperInterface {
 
 	@Override
 	public PutObjectResult uploadFileToSD(String s3ZipFilename, File fileToUpload)throws SdkClientException, AmazonServiceException {
-		return s3.putObject(bucketName, s3ZipFilename, fileToUpload);
+		System.out.println("Uploading file to S3: " + s3ZipFilename);
+        return s3.putObject(bucketName, s3ZipFilename, fileToUpload);
 	}
 
 	@Override

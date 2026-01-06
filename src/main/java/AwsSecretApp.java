@@ -32,7 +32,7 @@ public class AwsSecretApp {
                 emailService.sendEmail(recipient, subject, content);
 
                 System.out.println("Email sent with the secret.");
-
+                 System.out.println("creating zip and uploading to S3...");
                 // Create sample .txt file with "hello world"
                 File sampleFile = new File("hello-world.txt");
                 try (FileWriter writer = new FileWriter(sampleFile)) {
@@ -41,6 +41,7 @@ public class AwsSecretApp {
                     System.err.println("Error creating sample file: " + e.getMessage());
                 }
 
+                 System.out.println("start zip");
                 // Create zip file
                 File zipFile = new File("hello-world.zip");
                 try (FileOutputStream fos = new FileOutputStream(zipFile);
@@ -61,6 +62,7 @@ public class AwsSecretApp {
                     System.err.println("Error creating zip file: " + e.getMessage());
                 }
 
+                System.out.println("uploading to S3");
                 // Upload zip file to S3
                 try {
                     var result = s3Service.uploadFileToSD("hello-world.zip", zipFile);
