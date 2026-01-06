@@ -8,4 +8,11 @@ public class ServiceUtil {
         }
         return environment + "_" + baseName;
     }
+
+    public static String trimAndReplaceNewLine(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input.trim().replaceAll("\\n", "").replaceAll("\\r", "");
+    }
 }
