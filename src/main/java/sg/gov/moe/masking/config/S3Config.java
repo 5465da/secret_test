@@ -22,7 +22,7 @@ import org.springframework.context.annotation.PropertySource;
 public class S3Config {
 
 	private static final Logger LOG = LoggerFactory.getLogger(S3Config.class);
-	private static final String SUPPORT_DATA_S3 = "aws_supportdata_s3key";
+	private static final String SUPPORT_DATA_S3 = "aws_smtp_credentials";
 
 	private SecretWrapperService  secretWrapperService;
 	private SecretManagerResponseBody secretResponse;
