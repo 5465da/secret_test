@@ -2,6 +2,7 @@
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import sg.gov.moe.masking.service.SecretWrapperService;
 import sg.gov.moe.masking.service.EmailService;
@@ -13,9 +14,11 @@ import java.util.zip.ZipOutputStream;
 
 @Configuration
 @ComponentScan(basePackages = "sg.gov.moe.masking")
+@PropertySource("classpath:application.properties")
 public class AwsSecretApp {
 
     public static void main(String[] args) {
+        System.out.println("Starting AWS Secret App...");
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AwsSecretApp.class);
 
         SecretWrapperService secretService = context.getBean(SecretWrapperService.class);
@@ -64,11 +67,14 @@ public class AwsSecretApp {
 
                 System.out.println("uploading to S3");
                 // Upload zip file to S3
+                System.out.println("creating zip and uploading to S3...");
+                System.out.println("start zip");
                 try {
                     var result = s3Service.uploadFileToSD("hello-world.zip", zipFile);
                     System.out.println("Zip file uploaded to S3: " + result.getETag());
                 } catch (Exception e) {
                     System.err.println("Error uploading zip to S3: " + e.getMessage());
+                    e.printStackTrace();
                 } finally {
                     // Clean up
                     sampleFile.delete();

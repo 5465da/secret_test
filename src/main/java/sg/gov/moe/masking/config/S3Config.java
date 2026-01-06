@@ -15,7 +15,10 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
+import org.springframework.context.annotation.PropertySource;
+
 @Configuration
+@PropertySource("classpath:application.properties")
 public class S3Config {
 
 	private static final Logger LOG = LoggerFactory.getLogger(S3Config.class);
@@ -57,7 +60,11 @@ public class S3Config {
 		ClientConfiguration clientConfig = new ClientConfiguration()
 				.withConnectionTimeout(10000) // Connection timeout in milliseconds
 				.withSocketTimeout(300000); // Socket timeout in milliseconds
-		return AmazonS3ClientBuilder.standard().withRegion(region)
+		
+		LOG.info("S3 Region: {}", region);
+		LOG.info("S3 Credentials - AccessKey: {}", awscredentials.getAWSAccessKeyId() != null ? "present" : "null");
+		
+		return AmazonS3ClientBuilder.standard().withRegion(region != null ? region : "ap-southeast-2")
 				.withClientConfiguration(clientConfig)
 				.withCredentials(new AWSStaticCredentialsProvider(awscredentials)).build();
 
@@ -80,7 +87,8 @@ public class S3Config {
 			}
 		};
 		LOG.info("Initialized the S3Utility Bean");
-		return AmazonS3ClientBuilder.standard().withRegion(region)
+		LOG.info("S3 Utility Portal Region: {}", utilityPortalRegion);
+		return AmazonS3ClientBuilder.standard().withRegion(utilityPortalRegion != null ? utilityPortalRegion : "ap-southeast-2")
 				.withCredentials(new AWSStaticCredentialsProvider(awscredentials)).build();
 	}
 }
