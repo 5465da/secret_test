@@ -52,7 +52,7 @@ public class AwsSecretApp {
                     parameters.setEncryptFiles(true);
                     parameters.setEncryptionMethod(EncryptionMethod.ZIP_STANDARD);
 
-                    ZipFile zip = new ZipFile(zipFile, secret.toString().toCharArray());
+                    ZipFile zip = new ZipFile(zipFile, secret.getHashSalt().toCharArray());
                     zip.addFile(sampleFile, parameters);
 
                     System.out.println("HashSalt: " + secret.getHashSalt());
