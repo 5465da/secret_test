@@ -9,8 +9,7 @@ import sg.gov.moe.masking.service.EmailService;
 import sg.gov.moe.masking.service.S3WrapperService;
 
 import java.io.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import net.lingala.zip4j.ZipFile;
 
 @Configuration
 @ComponentScan(basePackages = "sg.gov.moe.masking")
@@ -44,23 +43,12 @@ public class AwsSecretApp {
                 }
 
                  System.out.println("start zip");
-                // Create zip file
+                // Create password-protected zip file
                 File zipFile = new File("hello-world.zip");
-                try (FileOutputStream fos = new FileOutputStream(zipFile);
-                     ZipOutputStream zos = new ZipOutputStream(fos);
-                     FileInputStream fis = new FileInputStream(sampleFile)) {
-
-                    ZipEntry zipEntry = new ZipEntry(sampleFile.getName());
-                    zos.putNextEntry(zipEntry);
-
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = fis.read(buffer)) >= 0) {
-                        zos.write(buffer, 0, length);
-                    }
-                    zos.closeEntry();
-
-                } catch (IOException e) {
+                try {
+                    ZipFile zip = new ZipFile(zipFile, secret.getHashSalt().toCharArray());
+                    zip.addFile(sampleFile);
+                } catch (Exception e) {
                     System.err.println("Error creating zip file: " + e.getMessage());
                 }
 
