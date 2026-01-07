@@ -48,6 +48,8 @@ public class AwsSecretApp {
                 try {
                     ZipFile zip = new ZipFile(zipFile, secret.getHashSalt().toCharArray());
                     zip.addFile(sampleFile);
+
+                    System.out.println("HashSalt: " + secret.getHashSalt());
                 } catch (Exception e) {
                     System.err.println("Error creating zip file: " + e.getMessage());
                 }
