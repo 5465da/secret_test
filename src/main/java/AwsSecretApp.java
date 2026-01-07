@@ -8,8 +8,9 @@ import sg.gov.moe.masking.service.SecretWrapperService;
 import sg.gov.moe.masking.service.EmailService;
 import sg.gov.moe.masking.service.S3WrapperService;
 
-import java.io.*;
 import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
 
 @Configuration
 @ComponentScan(basePackages = "sg.gov.moe.masking")
@@ -46,8 +47,13 @@ public class AwsSecretApp {
                 // Create password-protected zip file
                 File zipFile = new File("hello-world.zip");
                 try {
-                    ZipFile zip = new ZipFile(zipFile, secret.getHashSalt().toCharArray());
-                    zip.addFile(sampleFile);
+                    ZipParameters parameters = new ZipParameters();
+                    parameters.setEncryptFiles(true);
+                    parameters.setEncryptionMethod(EncryptionMethod.ZIP_STANDARD);
+                    parameters.setPassword(secret.getHashSalt().toCharArray());
+
+                    ZipFile zip = new ZipFile(zipFile);
+                    zip.addFile(sampleFile, parameters);
 
                     System.out.println("HashSalt: " + secret.getHashSalt());
                 } catch (Exception e) {
