@@ -42,14 +42,13 @@ public class EmailService {
 				helper.setTo(recipient);
 			}
 			helper.setFrom(fromEmail);
-			helper.setTo(recipient);
 			helper.setSubject(subject);
 			helper.setText(content, true);
 			javaMailSender.send(mimeMessage);
 
-			logger.info("Email sent successfully!");
+			logger.info("Email sent successfully to: {}", recipient);
 		} catch (Exception e) {
-			logger.error("Failed to send email {} ", e.getMessage());
+			logger.error("Failed to send email to {}: {}", recipient, e.getMessage(), e);
 		}
 	}
 }

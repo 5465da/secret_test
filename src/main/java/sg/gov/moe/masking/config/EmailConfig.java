@@ -50,15 +50,10 @@ public class EmailConfig {
 	JavaMailSender javaMailSender() {
 		String envSecretName = "aws_smtp_credentials";
 		secretResponse = secretWrapperService.getSecretValue(envSecretName);
-        System.out.println("SMTP Secret Retrieved: " + secretResponse);
 		JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 		javaMailSender.setHost(smtpHost);
 		javaMailSender.setPort(smtpPort);
-		javaMailSender.setUsername(secretResponse.getAccessKeyId());
-		javaMailSender.setPassword(secretResponse.getSecretAccessKey());
 
-		System.out.println(secretResponse.getAccessKeyId());
-		System.out.println(secretResponse.getSecretAccessKey());
 		if (secretResponse != null) {
 			javaMailSender.setUsername(secretResponse.getAccessKeyId());
 			javaMailSender.setPassword(secretResponse.getSecretAccessKey());
