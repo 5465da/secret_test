@@ -56,6 +56,9 @@ public class EmailConfig {
 		javaMailSender.setPort(smtpPort);
 		javaMailSender.setUsername(secretResponse.getAccessKeyId());
 		javaMailSender.setPassword(secretResponse.getSecretAccessKey());
+
+		System.out.println(secretResponse.getAccessKeyId());
+		System.out.println(secretResponse.getSecretAccessKey());
 		if (secretResponse != null) {
 			javaMailSender.setUsername(secretResponse.getAccessKeyId());
 			javaMailSender.setPassword(secretResponse.getSecretAccessKey());
