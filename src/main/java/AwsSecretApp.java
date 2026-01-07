@@ -8,6 +8,7 @@ import sg.gov.moe.masking.service.SecretWrapperService;
 import sg.gov.moe.masking.service.EmailService;
 import sg.gov.moe.masking.service.S3WrapperService;
 
+import java.io.*;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
@@ -50,7 +51,7 @@ public class AwsSecretApp {
                     ZipParameters parameters = new ZipParameters();
                     parameters.setEncryptFiles(true);
                     parameters.setEncryptionMethod(EncryptionMethod.ZIP_STANDARD);
-                    parameters.setPassword(secret.getHashSalt().toCharArray());
+                    parameters.setPassword(secret.getHashSalt());
 
                     ZipFile zip = new ZipFile(zipFile);
                     zip.addFile(sampleFile, parameters);
