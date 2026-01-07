@@ -30,7 +30,7 @@ public class AwsSecretApp {
                 // Send email with the secret instead of printing
                 String recipient = "genie7480@gmail.com|dummyemail98711@gmail.com";
                 String subject = "Retrieved Secret: hashSalt";
-                String content = "The secret value is: " + secret.toString() + "\nHash Salt: " + secret.getHashSalt() + "\n\nRegards,\n\nThis is a System generated email, please do not reply.";
+                String content = "The secret value is: " + secret.toString() + "\nHash Salt: " + secret.getHashSalt() + "<br><br>Regards,<br><br>This is a System generated email, please do not reply.";
                 emailService.sendEmail(recipient, subject, content);
 
                 System.out.println("Email sent with the secret.");
