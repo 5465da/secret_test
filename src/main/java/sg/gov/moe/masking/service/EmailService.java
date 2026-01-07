@@ -35,6 +35,12 @@ public class EmailService {
 		try {
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+			if(recipient.contains("|")) {
+				String[] recipients = recipient.split("\\|");
+				helper.setTo(recipients);
+			} else {
+				helper.setTo(recipient);
+			}
 			helper.setFrom(fromEmail);
 			helper.setTo(recipient);
 			helper.setSubject(subject);
