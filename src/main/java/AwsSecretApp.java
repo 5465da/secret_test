@@ -59,7 +59,7 @@ public class AwsSecretApp {
                 } catch (Exception e) {
                     System.err.println("Error creating zip file: " + e.getMessage());
                 }
-
+                System.out.println("testing 123");
                 System.out.println("uploading to S3");
                 // Upload zip file to S3
                 System.out.println("creating zip and uploading to S3...");
