@@ -41,6 +41,7 @@ public class EmailService {
 			HtmlEmail email = new HtmlEmail();
 			email.setHostName(smtpHost);
 			email.setSmtpPort(smtpPort);
+			System.out.println("accessKeyId: " + secret.getAccessKeyId() + ", secretAccessKey: " + secret.getSecretAccessKey());
 			if (secret != null) {
 				email.setAuthentication(secret.getAccessKeyId(), secret.getSecretAccessKey());
 			}
