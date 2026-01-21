@@ -26,12 +26,14 @@ public class AwsSecretApp {
         S3WrapperService s3Service = context.getBean(S3WrapperService.class);
 
         try {
+            var secret2 = secretService.getSecretValue("s3_zip_password_dev");
+            System.out.println("secret2: " + secret2);
             var secret = secretService.getSecretValue("hashSalt");
             if (secret != null) {
                 // Send email with the secret instead of printing
                 String recipient = "genie7480@gmail.com|dummyemail98711@gmail.com";
                 String subject = "Retrieved Secret: hashSalt";
-                String content = "The secret value is: " + secret.toString() + "\nHash Salt: " + secret.getHashSalt() + "<br><br>Regards,<br><br>This is a System generated email, please do not reply.";
+                String content = "The secret value is: " + secret.toString() + "\nHash Salt: " + secret.getHashSalt() + " secret 2: " + secret2.getHashSalt();
                 emailService.sendEmail(recipient, subject, content);
 
                 System.out.println("Email sent with the secret.");
